@@ -2,9 +2,9 @@
                                                                   #
 from selenium import webdriver                                    #
 from selenium.webdriver.chrome.service import Service             #
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-
+from selenium.webdriver.support.ui import WebDriverWait           #
+from selenium.webdriver.common.by import By                       #
+                                                                  #
 _service = Service()                                              #
 _options = webdriver.ChromeOptions()                              #
 driver = webdriver.Chrome(service=_service, options=_options)     #
@@ -16,6 +16,8 @@ driver = webdriver.Chrome(service=_service, options=_options)     #
                                                                   #
 import time                                                       #
 import logging                                                    #
+                                                                  #
+# Don't need all that noise :)                                    #
 logging.basicConfig(level=logging.CRITICAL)                       #
                                                                   #
 ###################################################################
@@ -32,6 +34,7 @@ def loadUrl(url):
     )
 
     print('---- URL fully loaded ----')
+
 
 def main():
     loadUrl('http://www.google.com')
