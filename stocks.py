@@ -94,6 +94,29 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     print('------|' + current_line.ljust(longest_line) + '|')
     print('------+' + '*' * longest_line + '+')
 
+    _FLOAT_OPEN_PRICE = float(_open_price)
+    _FLOAT_CURRENT_PRICE = float(_current_price)
+
+    if _FLOAT_OPEN_PRICE > _FLOAT_CURRENT_PRICE:
+        _DIFFERENCE = _FLOAT_OPEN_PRICE - _FLOAT_CURRENT_PRICE
+        _PERCENT = (_DIFFERENCE) / _FLOAT_OPEN_PRICE * 100
+        _diff_line = f" {ticker} is down by ${_DIFFERENCE:.2f} (-{_PERCENT:.2f}%) "
+    elif _FLOAT_CURRENT_PRICE > _FLOAT_OPEN_PRICE:
+        _DIFFERENCE = _FLOAT_CURRENT_PRICE - _FLOAT_OPEN_PRICE
+        _PERCENT = (_DIFFERENCE) / _FLOAT_OPEN_PRICE * 100
+        _diff_line = f" {ticker} is up by ${_DIFFERENCE:.2f} (+{_PERCENT:.2f}%) "
+    else:
+        _diff_line = f" {ticker} is unchanged "
+
+    # Taking no credit or blame for this chatGPT magic
+    _diff_line_len = len(_diff_line)
+    print('------+' + '*' * _diff_line_len + '+')
+    print('------|' + _diff_line.center(_diff_line_len) + '|')
+    print('------+' + '*' * _diff_line_len + '+')
+
+    if input('Press enter to continue or type "exit" to quit: ') == 'exit':
+        sys.exit(0)
+
     main()
 
 
