@@ -35,10 +35,50 @@ def getPrices(ticker):
 
     print('----- Getting price of %s' % ticker)
 
+
+    ##########################################################################################
+
+    WebDriverWait(driver, 30).until(
+        lambda driver: driver.find_element(By.XPATH, _OPEN_PRICE_PATH).is_displayed()
+    )
     _open_price = driver.find_element(By.XPATH, _OPEN_PRICE_PATH).text
+
+    ##########################################################################################
+
+
+
+    ##########################################################################################
+
+    WebDriverWait(driver, 30).until(
+        lambda driver: driver.find_element(By.XPATH, _HIGH_PRICE_PATH).is_displayed()
+    )
     _high_price = driver.find_element(By.XPATH, _HIGH_PRICE_PATH).text
+
+    ##########################################################################################
+
+
+
+    ##########################################################################################
+
+    WebDriverWait(driver, 30).until(
+        lambda driver: driver.find_element(By.XPATH, _LOW_PRICE_PATH).is_displayed()
+    )
     _low_price = driver.find_element(By.XPATH, _LOW_PRICE_PATH).text
+
+    ##########################################################################################
+
+
+
+    ##########################################################################################
+
+    WebDriverWait(driver, 30).until(
+        lambda driver: driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).is_displayed()
+    )
     _current_price = driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).text
+
+    ##########################################################################################
+
+
 
     # Make an asterisk box to format the output with the prices inside the box
     print('------' + '*' * (len(ticker) + 14))
@@ -84,7 +124,14 @@ def loadTicker(ticker):
 
     print('--- Loading %s' % ticker)
 
+
     _REAL_SEARCH_PATH = '/html/body/div[10]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input'
+
+    # Wait until the search bar is visible
+    WebDriverWait(driver, 30).until(
+        lambda driver: driver.find_element(By.XPATH, _REAL_SEARCH_PATH).is_displayed()
+    )
+
     _real_search_bar = driver.find_element(By.XPATH, _REAL_SEARCH_PATH)
 
     _real_search_bar.send_keys(ticker)
