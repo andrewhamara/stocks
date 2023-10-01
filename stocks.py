@@ -98,7 +98,6 @@ def loadUrl(url):
 
     print('- Loading landing page')
 
-    # Give 30 seconds to fully load the URL
     loadPage()
 
     print('-- Landing page fully loaded')
@@ -119,7 +118,6 @@ def loadTicker(ticker):
 
     _initial_search_bar.click()
 
-    # Give 30 seconds to fully load the URL
     loadPage()
 
     print('--- Loading %s' % ticker)
@@ -137,26 +135,38 @@ def loadTicker(ticker):
     _real_search_bar.send_keys(ticker)
     _real_search_bar.send_keys(Keys.ENTER)
 
-    # Give 30 seconds to fully load the URL
     loadPage()
 
     print('---- %s fully loaded' % ticker)
 
+
+#### Check input ####
+def getInput() -> str:
+
+    while True:
+        _TICKER = str(input('Enter ticker: ')).upper()
+
+        if len(_TICKER) > 5:
+            print('Ticker is too long')
+
+        elif len(_TICKER) < 1:
+            print('Ticker is too short')
+        else:
+            return _TICKER
+
+
 def main():
 
-    _TICKER = str(input('Enter ticker: ')).upper()
+    _TICKER = getInput()
 
-    # Trading View
     loadUrl('http://www.tradingview.com/screener/')
 
     loadPage()
 
-    # Ticker
     loadTicker(_TICKER)
 
     loadPage()
 
-    # Price
     getPrices(_TICKER)
 
     driver.quit()
