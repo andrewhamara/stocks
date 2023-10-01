@@ -45,18 +45,10 @@ def getPrices(ticker):
 
     ##########################################################################################
 
-
-
-    ##########################################################################################
-
     WebDriverWait(driver, 30).until(
         lambda driver: driver.find_element(By.XPATH, _HIGH_PRICE_PATH).is_displayed()
     )
     _high_price = driver.find_element(By.XPATH, _HIGH_PRICE_PATH).text
-
-    ##########################################################################################
-
-
 
     ##########################################################################################
 
@@ -67,17 +59,12 @@ def getPrices(ticker):
 
     ##########################################################################################
 
-
-
-    ##########################################################################################
-
     WebDriverWait(driver, 30).until(
         lambda driver: driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).is_displayed()
     )
     _current_price = driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).text
 
     ##########################################################################################
-
 
 
     header = f" {ticker} Prices "
@@ -99,17 +86,6 @@ def getPrices(ticker):
     print('------|' + low_line.ljust(longest_line) + '|')
     print('------|' + current_line.ljust(longest_line) + '|')
     print('------+' + '*' * longest_line + '+')
-
-    # Make an asterisk box to format the output with the prices inside the box
-    #print('------' + '*' * (len(ticker) + 14))
-    #print('------* %s Prices *' % ticker)
-    #print('------' + '*' * (len(ticker) + 14))
-    #print('------ Open: %s' % _open_price)
-    #print('------ High: %s' % _high_price)
-    #print('------ Low: %s' % _low_price)
-    #print('------ Current: %s' % _current_price)
-    #print('------' + '*' * (len(ticker) + 14))
-
 
 
 #### Load url for main site ####
@@ -141,7 +117,6 @@ def loadTicker(ticker):
     loadPage()
 
     print('--- Loading %s' % ticker)
-
 
     _REAL_SEARCH_PATH = '/html/body/div[10]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input'
 
