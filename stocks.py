@@ -19,6 +19,7 @@ driver = webdriver.Chrome(service=_service, options=_options)     #
                                                                   #
 import time                                                       #
 import logging                                                    #
+import sys                                                        #
                                                                   #
 # Don't need all that noise :)                                    #
 logging.basicConfig(level=logging.CRITICAL)                       #
@@ -66,7 +67,13 @@ def getPrices(ticker):
 
     ##########################################################################################
 
+    print('------ %s price found' % ticker)
 
+    printMenu(ticker, _open_price, _high_price, _low_price, _current_price)
+
+
+#### Print menu ####
+def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : str, _current_price: str):
     header = f" {ticker} Prices "
     header_line = '*' * len(header)
 
@@ -86,6 +93,8 @@ def getPrices(ticker):
     print('------|' + low_line.ljust(longest_line) + '|')
     print('------|' + current_line.ljust(longest_line) + '|')
     print('------+' + '*' * longest_line + '+')
+
+    main()
 
 
 #### Load url for main site ####
@@ -139,7 +148,10 @@ def loadTicker(ticker):
 def getInput() -> str:
 
     while True:
-        _TICKER = str(input('Enter ticker: ')).upper()
+        _TICKER = str(input('Enter ticker (q to exit): ')).upper()
+
+        if _TICKER.upper() == 'Q':
+            sys.exit()
 
         if len(_TICKER) > 5:
             print('Ticker is too long')
@@ -151,21 +163,13 @@ def getInput() -> str:
 
 
 def main():
-
     _TICKER = getInput()
-
     loadUrl('http://www.tradingview.com/screener/')
-
     loadPage()
-
     loadTicker(_TICKER)
-
     loadPage()
-
     getPrices(_TICKER)
-
     driver.quit()
-
 
 if __name__ == "__main__":
     main()
