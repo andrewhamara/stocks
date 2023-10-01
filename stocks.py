@@ -80,15 +80,35 @@ def getPrices(ticker):
 
 
 
+    header = f" {ticker} Prices "
+    header_line = '*' * len(header)
+
+    open_line = f" Open: {_open_price} "
+    high_line = f" High: {_high_price} "
+    low_line = f" Low: {_low_price} "
+    current_line = f" Current: {_current_price} "
+
+    # Find the longest line to adjust the width of the box
+    longest_line = max(len(open_line), len(high_line), len(low_line), len(current_line), len(header_line))
+
+    print('------+' + '*' * longest_line + '+')
+    print('------|' + header.center(longest_line) + '|')
+    print('------+' + '-' * longest_line + '+')
+    print('------|' + open_line.ljust(longest_line) + '|')
+    print('------|' + high_line.ljust(longest_line) + '|')
+    print('------|' + low_line.ljust(longest_line) + '|')
+    print('------|' + current_line.ljust(longest_line) + '|')
+    print('------+' + '*' * longest_line + '+')
+
     # Make an asterisk box to format the output with the prices inside the box
-    print('------' + '*' * (len(ticker) + 14))
-    print('------* %s Prices *' % ticker)
-    print('------' + '*' * (len(ticker) + 14))
-    print('------ Open: %s' % _open_price)
-    print('------ High: %s' % _high_price)
-    print('------ Low: %s' % _low_price)
-    print('------ Current: %s' % _current_price)
-    print('------' + '*' * (len(ticker) + 14))
+    #print('------' + '*' * (len(ticker) + 14))
+    #print('------* %s Prices *' % ticker)
+    #print('------' + '*' * (len(ticker) + 14))
+    #print('------ Open: %s' % _open_price)
+    #print('------ High: %s' % _high_price)
+    #print('------ Low: %s' % _low_price)
+    #print('------ Current: %s' % _current_price)
+    #print('------' + '*' * (len(ticker) + 14))
 
 
 
