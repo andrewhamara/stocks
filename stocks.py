@@ -41,7 +41,9 @@ def loadUrl(url):
 
 #### Load ticker ####
 def loadTicker(ticker):
-    _initial_search_bar = driver.find_element(By.XPATH, '/html/body/div[3]/div[3]/div[2]/div[2]/div/div/button[1]/span')
+
+    _INITIAL_SEARCH_PATH = '/html/body/div[3]/div[3]/div[2]/div[2]/div/div/div/button[1]/span'
+    _initial_search_bar = driver.find_element(By.XPATH, _INITIAL_SEARCH_PATH)
 
     _initial_search_bar.click()
 
@@ -49,7 +51,8 @@ def loadTicker(ticker):
 
     print('---- loading ticker      ----')
 
-    _real_search_bar = driver.find_element(By.XPATH, '//*[@id="overlap-manager-root"]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input')
+    _REAL_SEARCH_PATH = '//*[@id="overlap-manager-root"]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input'
+    _real_search_bar = driver.find_element(By.XPATH, _REAL_SEARCH_PATH)
 
     _real_search_bar.send_keys(ticker)
 
