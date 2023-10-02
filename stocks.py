@@ -67,7 +67,7 @@ def getPrices(ticker):
 
     ##########################################################################################
 
-    print('------ %s price found' % ticker)
+    print('------ %s price found\n' % ticker)
 
     printMenu(ticker, _open_price, _high_price, _low_price, _current_price)
 
@@ -92,7 +92,7 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     print('------|' + high_line.ljust(longest_line) + '|')
     print('------|' + low_line.ljust(longest_line) + '|')
     print('------|' + current_line.ljust(longest_line) + '|')
-    print('------+' + '*' * longest_line + '+')
+    print('------+' + '*' * longest_line + '+\n')
 
     _FLOAT_OPEN_PRICE = float(_open_price)
     _FLOAT_CURRENT_PRICE = float(_current_price)
@@ -112,10 +112,7 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     _diff_line_len = len(_diff_line)
     print('------+' + '*' * _diff_line_len + '+')
     print('------|' + _diff_line.center(_diff_line_len) + '|')
-    print('------+' + '*' * _diff_line_len + '+')
-
-    if input('Press enter to continue or type "exit" to quit: ') == 'exit':
-        sys.exit(0)
+    print('------+' + '*' * _diff_line_len + '+\n')
 
     main()
 
@@ -173,8 +170,8 @@ def getInput() -> str:
     while True:
         _TICKER = str(input('Enter ticker (q to exit): ')).upper()
 
-        if _TICKER.upper() == 'Q':
-            sys.exit()
+        if _TICKER == 'Q':
+            sys.exit(0)
 
         if len(_TICKER) > 5:
             print('Ticker is too long')
