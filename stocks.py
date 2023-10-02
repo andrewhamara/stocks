@@ -171,6 +171,7 @@ def getInput() -> str:
         _TICKER = str(input('Enter ticker (q to exit): ')).upper()
 
         if _TICKER == 'Q':
+            driver.quit()
             sys.exit(0)
 
         if len(_TICKER) > 5:
