@@ -3,6 +3,7 @@
 from selenium import webdriver                                    #
 from selenium.webdriver.chrome.service import Service             #
 from selenium.webdriver.support.ui import WebDriverWait           #
+from selenium.webdriver.support import expected_conditions as EC  #
 from selenium.webdriver.common.by import By                       #
 from selenium.webdriver.common.keys import Keys                   #
                                                                   #
@@ -36,36 +37,15 @@ def getPrices(ticker):
 
     print('----- Getting price of %s' % ticker)
 
-
-    ##########################################################################################
-
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.find_element(By.XPATH, _OPEN_PRICE_PATH).is_displayed()
-    )
+    # Assume that if one price loads, they all did
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, _OPEN_PRICE_PATH)))
     _open_price = driver.find_element(By.XPATH, _OPEN_PRICE_PATH).text
 
-    ##########################################################################################
-
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.find_element(By.XPATH, _HIGH_PRICE_PATH).is_displayed()
-    )
     _high_price = driver.find_element(By.XPATH, _HIGH_PRICE_PATH).text
 
-    ##########################################################################################
-
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.find_element(By.XPATH, _LOW_PRICE_PATH).is_displayed()
-    )
     _low_price = driver.find_element(By.XPATH, _LOW_PRICE_PATH).text
 
-    ##########################################################################################
-
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).is_displayed()
-    )
     _current_price = driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).text
-
-    ##########################################################################################
 
     print('------ %s price found\n' % ticker)
 
@@ -184,12 +164,11 @@ def getInput() -> str:
 
 
 def main():
-    _TICKER = getInput()
-    loadUrl('http://www.tradingview.com/screener/')
-    loadPage()
-    loadTicker(_TICKER)
-    loadPage()
-    getPrices(_TICKER)
+    while True:
+        _TICKER = getInput()
+        loadUrl('http://www.tradingview.com/screener/')
+        loadTicker(_TICKER)
+        getPrices(_TICKER)
     driver.quit()
 
 if __name__ == "__main__":
