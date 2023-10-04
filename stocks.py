@@ -35,7 +35,7 @@ def getPrices(ticker):
     _LOW_PRICE_PATH = '/html/body/div[2]/div[5]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[2]/div[1]/div[1]/div[2]/div/div[4]/div[2]'
     _CURRENT_PRICE_PATH = '/html/body/div[2]/div[5]/div[2]/div[1]/div/div[2]/div[1]/div[2]/div/div[2]/div[1]/div[1]/div[2]/div/div[5]/div[2]'
 
-    print('----- Getting price of %s' % ticker)
+    print('--- Getting price of %s' % ticker)
 
     # Assume that if one price loads, they all did
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, _OPEN_PRICE_PATH)))
@@ -47,7 +47,7 @@ def getPrices(ticker):
 
     _current_price = driver.find_element(By.XPATH, _CURRENT_PRICE_PATH).text
 
-    print('------ %s price found\n' % ticker)
+    print('---- %s price found\n' % ticker)
 
     printMenu(ticker, _open_price, _high_price, _low_price, _current_price)
 
@@ -97,51 +97,28 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     main()
 
 
-#### Load url for main site ####
-def loadUrl(url):
-    driver.get(url)
-
-    print('- Loading landing page')
-
-    loadPage()
-
-    print('-- Landing page fully loaded')
-
-
-#### Let page fully load ####
-def loadPage():
-    # Give 30 seconds to fully load the URL
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.execute_script("return document.readyState") == "complete"
-    )
-
+def waitForElement(xpath):
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, xpath)))
 
 #### Load ticker ####
 def loadTicker(ticker):
     _INITIAL_SEARCH_PATH = '/html/body/div[3]/div[3]/div[2]/div[2]/div/div/div/button[1]/span'
-    _initial_search_bar = driver.find_element(By.XPATH, _INITIAL_SEARCH_PATH)
 
-    _initial_search_bar.click()
+    waitForElement(_INITIAL_SEARCH_PATH)
 
-    loadPage()
+    driver.find_element(By.XPATH, _INITIAL_SEARCH_PATH).click()
 
-    print('--- Loading %s' % ticker)
+    print('- Loading %s' % ticker)
 
     _REAL_SEARCH_PATH = '/html/body/div[10]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input'
 
-    # Wait until the search bar is visible
-    WebDriverWait(driver, 30).until(
-        lambda driver: driver.find_element(By.XPATH, _REAL_SEARCH_PATH).is_displayed()
-    )
+    waitForElement(_REAL_SEARCH_PATH)
 
     _real_search_bar = driver.find_element(By.XPATH, _REAL_SEARCH_PATH)
-
     _real_search_bar.send_keys(ticker)
     _real_search_bar.send_keys(Keys.ENTER)
 
-    loadPage()
-
-    print('---- %s fully loaded' % ticker)
+    print('-- %s fully loaded' % ticker)
 
 
 #### Check input ####
@@ -149,10 +126,6 @@ def getInput() -> str:
 
     while True:
         _TICKER = str(input('Enter ticker (q to exit): ')).upper()
-
-        if _TICKER == 'Q':
-            driver.quit()
-            sys.exit(0)
 
         if len(_TICKER) > 5:
             print('Ticker is too long')
@@ -164,12 +137,18 @@ def getInput() -> str:
 
 
 def main():
-    while True:
-        _TICKER = getInput()
-        loadUrl('http://www.tradingview.com/screener/')
-        loadTicker(_TICKER)
-        getPrices(_TICKER)
-    driver.quit()
+    try:
+        driver.get('http://www.tradingview.com/screener')
+        _TICKER = ''
+        while _TICKER != 'Q':
+            _TICKER = getInput()
+            if _TICKER != 'Q':
+                loadTicker(_TICKER)
+                getPrices(_TICKER)
+    except Exception as e:
+        print(f"An error has occured: {e}")
+    finally:
+        driver.quit()
 
 if __name__ == "__main__":
     main()
