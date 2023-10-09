@@ -21,6 +21,7 @@ driver = webdriver.Chrome(service=_service, options=_options)     #
 import time                                                       #
 import logging                                                    #
 import sys                                                        #
+from funPrints import *                                           #
                                                                   #
 # Don't need all that noise :)                                    #
 logging.basicConfig(level=logging.CRITICAL)                       #
@@ -137,36 +138,6 @@ def getInput() -> str:
             print('Ticker is too short')
         else:
             return _TICKER
-
-def stocksUpMessage():
-    pass
-
-def stocksDownMessage():
-    print("        .------------------------.")
-    print("        |       PSYCHIATRIC      |")
-    print("        |         HELP  5¢       |")
-    print("        |________________________|")
-    print('        ||     .-"""--.        ||')
-    print("        ||    /        \.-.    ||")
-    print("        ||   |     ._,     \   ||")
-    print("        ||   \_/`-'   '-.,_/   ||")
-    print("        ||   (_   (' _)') \    ||")
-    print("        ||   /|           |\   ||")
-    print("        ||  | \     __   / |   ||")
-    print("        ||   \_).,_____,/}/    ||")
-    print("      __||____;_--'___'/ (     ||")
-    print("    |\ ||   (__,\\    \_/------||")
-    print("    ||\||______________________||")
-    print("    ||||     Stocks are down,   |")
-    print("    ||||       THE DOCTOR       |")
-    print("    \|||         IS [IN]   _____|")
-    print("     \||                  (______)")
-    print(" jgs  `|___________________//||\\")
-    print("                          //=||=\\")
-    print("                          `  ``  `")
-
-def stocksEvenMessage():
-    pass
 
 
 def main():
