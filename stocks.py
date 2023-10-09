@@ -27,6 +27,7 @@ logging.basicConfig(level=logging.CRITICAL)                       #
                                                                   #
 ###################################################################
 
+UP_STOCKS_COUNT, DOWN_STOCKS_COUNT = 0, 0
 
 #### Get price of ticker ####
 def getPrices(ticker):
@@ -81,10 +82,12 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
         _DIFFERENCE = _FLOAT_OPEN_PRICE - _FLOAT_CURRENT_PRICE
         _PERCENT = (_DIFFERENCE) / _FLOAT_OPEN_PRICE * 100
         _diff_line = f" {ticker} is down by ${_DIFFERENCE:.2f} (-{_PERCENT:.2f}%) "
+        DOWN_STOCKS_COUNT += 1
     elif _FLOAT_CURRENT_PRICE > _FLOAT_OPEN_PRICE:
         _DIFFERENCE = _FLOAT_CURRENT_PRICE - _FLOAT_OPEN_PRICE
         _PERCENT = (_DIFFERENCE) / _FLOAT_OPEN_PRICE * 100
         _diff_line = f" {ticker} is up by ${_DIFFERENCE:.2f} (+{_PERCENT:.2f}%) "
+        UP_STOCKS_COUNT += 1
     else:
         _diff_line = f" {ticker} is unchanged "
 
@@ -135,6 +138,36 @@ def getInput() -> str:
         else:
             return _TICKER
 
+def stocksUpMessage():
+    pass
+
+def stocksDownMessage():
+    print("        .------------------------.")
+    print("        |       PSYCHIATRIC      |")
+    print("        |         HELP  5¢       |")
+    print("        |________________________|")
+    print('        ||     .-"""--.        ||')
+    print("        ||    /        \.-.    ||")
+    print("        ||   |     ._,     \   ||")
+    print("        ||   \_/`-'   '-.,_/   ||")
+    print("        ||   (_   (' _)') \    ||")
+    print("        ||   /|           |\   ||")
+    print("        ||  | \     __   / |   ||")
+    print("        ||   \_).,_____,/}/    ||")
+    print("      __||____;_--'___'/ (     ||")
+    print("    |\ ||   (__,\\    \_/------||")
+    print("    ||\||______________________||")
+    print("    ||||     Stocks are down,   |")
+    print("    ||||       THE DOCTOR       |")
+    print("    \|||         IS [IN]   _____|")
+    print("     \||                  (______)")
+    print(" jgs  `|___________________//||\\")
+    print("                          //=||=\\")
+    print("                          `  ``  `")
+
+def stocksEvenMessage():
+    pass
+
 
 def main():
     try:
@@ -149,6 +182,12 @@ def main():
         print(f"An error has occured: {e}")
     finally:
         driver.quit()
+        if UP_STOCKS_COUNT > DOWN_STOCKS_COUNT:
+            stocksUpMessage()
+        elif DOWN_STOCKS_COUNT > UP_STOCKS_COUNT:
+            stocksDownMessage()
+        else:
+            stocksEvenMessage()
 
 if __name__ == "__main__":
     main()
