@@ -28,7 +28,12 @@ logging.basicConfig(level=logging.CRITICAL)                       #
                                                                   #
 ###################################################################
 
-UP_STOCKS_COUNT, DOWN_STOCKS_COUNT = 0, 0
+
+###################################################################
+                                                                  #
+UP_STOCKS_COUNT, DOWN_STOCKS_COUNT = 0, 0                         #
+                                                                  #
+###################################################################
 
 #### Get price of ticker ####
 def getPrices(ticker):
@@ -40,7 +45,8 @@ def getPrices(ticker):
     print('--- Getting price of %s' % ticker)
 
     # Assume that if one price loads, they all did
-    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, _OPEN_PRICE_PATH)))
+    #WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, _OPEN_PRICE_PATH)))
+    time.sleep(3)
     _open_price = driver.find_element(By.XPATH, _OPEN_PRICE_PATH).text
 
     _high_price = driver.find_element(By.XPATH, _HIGH_PRICE_PATH).text
@@ -79,6 +85,8 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     _FLOAT_OPEN_PRICE = float(_open_price)
     _FLOAT_CURRENT_PRICE = float(_current_price)
 
+    global UP_STOCKS_COUNT, DOWN_STOCKS_COUNT
+
     if _FLOAT_OPEN_PRICE > _FLOAT_CURRENT_PRICE:
         _DIFFERENCE = _FLOAT_OPEN_PRICE - _FLOAT_CURRENT_PRICE
         _PERCENT = (_DIFFERENCE) / _FLOAT_OPEN_PRICE * 100
@@ -98,26 +106,19 @@ def printMenu(ticker : str, _open_price : str, _high_price : str, _low_price : s
     print('------|' + _diff_line.center(_diff_line_len) + '|')
     print('------+' + '*' * _diff_line_len + '+\n')
 
-    main()
-
-
-def waitForElement(xpath):
-    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, xpath)))
 
 #### Load ticker ####
 def loadTicker(ticker):
     _INITIAL_SEARCH_PATH = '/html/body/div[3]/div[3]/div[2]/div[2]/div/div/div/button[1]/span'
 
-    waitForElement(_INITIAL_SEARCH_PATH)
-
+    time.sleep(2)
     driver.find_element(By.XPATH, _INITIAL_SEARCH_PATH).click()
 
     print('- Loading %s' % ticker)
 
     _REAL_SEARCH_PATH = '/html/body/div[10]/div/div/div[2]/div/div/div[1]/div/div[1]/span/form/input'
 
-    waitForElement(_REAL_SEARCH_PATH)
-
+    time.sleep(2)
     _real_search_bar = driver.find_element(By.XPATH, _REAL_SEARCH_PATH)
     _real_search_bar.send_keys(ticker)
     _real_search_bar.send_keys(Keys.ENTER)
@@ -138,7 +139,6 @@ def getInput() -> str:
             print('Ticker is too short')
         else:
             return _TICKER
-
 
 def main():
     try:
